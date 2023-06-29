@@ -25,7 +25,6 @@ app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x
 app.use('/', pageRoute);
 app.use('/courses', courseRoute);
 
-app.get('/about');
 
 const port = 3000;
 app.listen(port, () => {
