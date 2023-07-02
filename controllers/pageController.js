@@ -32,6 +32,7 @@ exports.getIndexPage = (req, res) => {
   }
 
   exports.sendEmail = async (req, res) => {
+    try {
     const outputMessage =`
     <h1>Mail Details</h1>
     <ul>
@@ -60,7 +61,13 @@ exports.getIndexPage = (req, res) => {
         html: outputMessage, // html body
       });
 
+      req.flash("success", "We received your message succesfully")
+      
       console.log("Message sent: %s", info.messageId);
       // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
       res.status(200).redirect("contact")
+  } catch (err) {
+    req.flash("error", "Something happen!")
+    res.status(200).redirect("contact")
   }
+}
