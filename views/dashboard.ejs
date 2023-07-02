@@ -71,15 +71,25 @@
 					<div class="blog-author">
 						<div class="author-bio">
 							<h3 class="author_name">Courses from: <%= user.name %></h3>
-
-
 						</div>
-
+						<% if(flashMessages) { %>
+							<% if(flashMessages.success) { %>
+							<div class="alert alert-success">
+								<%= flashMessages.success %>
+							</div>                    
+							<% } %>
+							<% if(flashMessages.error) { %>
+								<div class="alert alert-danger">
+									<%= flashMessages.error %>
+								</div>                        
+							<% } %>                    
+						<% } %>
 					</div>
 					
                 </div><!-- end col -->
             </div><!-- end row -->
 			<div class="row mt-5"> 
+				
 				<% for (let i=0; i< courses.length; i++) { %>
                 <div class="col-lg-6 col-md-6 col-12">
                     <div class="course-item mb-5">
@@ -92,6 +102,12 @@
 							</div>
 							<div class="course-desc">
 								<p><%= courses[i].description %> </p>
+							</div>
+							<div class="clearfix">
+								<ul style="list-style-type: none">
+									<li style="float: left"><button class="btn btn-primary text-white rounded-0" ><span>Update</span></button></li>
+									<li style="float: right"><a href="/courses/<%= courses[i].slug %>?_method=DELETE" onclick="return confirm('Are you sure?')" class="btn btn-danger text-white rounded-0" ><span>Delete</span></a></li>
+								</ul>
 							</div>
 						</div>
 					</div>

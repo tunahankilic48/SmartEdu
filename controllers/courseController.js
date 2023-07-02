@@ -90,3 +90,9 @@ exports.releaseCourse = async (req, res) => {
 
   res.status(200).redirect('/users/dashboard');
 };
+
+exports.deleteCourse = async (req, res) => {
+  await Course.findOneAndRemove({slug: req.params.slug});
+  req.flash("success", "Course removed successfully!")
+  res.status(200).redirect('/users/dashboard');
+};
