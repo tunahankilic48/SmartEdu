@@ -59,3 +59,11 @@ exports.getCourseById = async (req, res) => {
       pageName: 'courses',
     });
 };
+
+exports.enrollCourse = async (req, res) => {
+  const user = await User.findById(req.session.userId);
+  await user.courses.push({_id: req.body.course_id})
+  await user.save();
+
+  res.status(200).redirect('/users/dashboard');
+};

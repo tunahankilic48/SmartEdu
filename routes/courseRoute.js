@@ -6,6 +6,7 @@ const router = express.Router();
 router.route('/').post(roleMiddleware(["teacher", "admin"]), courseController.createCourse);
 router.route('/').get(courseController.getAllCourses);
 router.route('/:slug').get(courseController.getCourseById);
+router.route('/enroll').post(courseController.enrollCourse);
 
 
 module.exports = router;

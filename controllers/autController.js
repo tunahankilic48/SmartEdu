@@ -7,7 +7,7 @@ const Course = require('../models/Course');
 exports.createUser = async (req, res) => {
   try {
     const newUser = await User.create(req.body);
-    res.status(201).redirect("/login")
+    res.status(201).redirect('/login');
   } catch (error) {
     res.status(400).json({
       status: 'fail',
@@ -24,8 +24,8 @@ exports.loginUser = async (req, res) => {
       bcrypt.compare(password, user.password, (err, same) => {
         if (same) {
           // user session
-          req.session.userId = user._id
-          res.status(201).redirect("/users/dashboard");
+          req.session.userId = user._id;
+          res.status(201).redirect('/users/dashboard');
         }
       });
     }
@@ -39,18 +39,20 @@ exports.loginUser = async (req, res) => {
 
 exports.logoutUser = (req, res) => {
   req.session.destroy(() => {
-    res.redirect("/")
-  })
-}
+    res.redirect('/');
+  });
+};
 
 exports.getDashboardPage = async (req, res) => {
-  const user = await User.findOne({_id : req.session.userId})
+  const user = await User.findOne({ _id: req.session.userId }).populate(
+    'courses'
+  );
   const categories = await Category.find();
-  const courses = await Course.find({user: req.session.userId})
+  const courses = await Course.find({ user: req.session.userId });
   res.status(200).render('dashboard', {
-    pageName: "dashboard",
+    pageName: 'dashboard',
     user,
     categories,
-    courses
+    courses,
   });
-}
+};
