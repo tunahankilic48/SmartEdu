@@ -4,10 +4,7 @@ const Category = require('../models/Category');
 exports.createCourse = async (req, res) => {
   try {
     const newCourse = await Course.create(req.body);
-    res.status(201).json({
-      status: 'success',
-      newCourse,
-    });
+    res.status(201).redirect("/courses");
   } catch (error) {
     res.status(400).json({
       status: 'fail',
