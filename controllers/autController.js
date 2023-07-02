@@ -58,10 +58,20 @@ exports.getDashboardPage = async (req, res) => {
   );
   const categories = await Category.find();
   const courses = await Course.find({ user: req.session.userId });
+  const users = await User.find();
   res.status(200).render('dashboard', {
     pageName: 'dashboard',
     user,
     categories,
     courses,
+    users
   });
+};
+
+exports.deleteUser = async (req, res) => {
+
+    await User.findByIdAndRemove(req.params.id);
+    await Course.deleteMany({user: req.params.id});
+    res.status(201).redirect('/users/dashboard');
+  
 };
